@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        *{
+            margin:0px;
+            padding:0px;
+            box-sizing:border-box;
+        }
+
+        .hide{
+            display:none; 
+        }
+
+        .cartContainer{
+            float:right;
+            position:fixed;
+            top:80px;
+            right:20px;
+            //border:1px solid black;
+            height:100px;
+            width:200px;
+        }
+
+        .buttonContainer{
+            width:100%; 
+            //border:1px solid black;
+            height:70px;
+        }
+
+        .cart{
+            float:right; 
+            margin-right:20px;
+            margin-top:20px;
+            padding:5px 10px;
+            position:relative;
+        }
+
+        .items{
+            width:70%;
+            margin:30px auto;
+            //border:1px solid black;
+            height:80vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-wrap:wrap; 
+        }
+
+        .item{
+            width:33.33%;
+            height:200px;
+            border:1px solid black;
+        }
+
+        .item > h2, p, .addBtn {
+            margin-bottom:20px;
+        }
+
+        .addBtn{
+            padding:5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="buttonContainer">
+        <button class="cart">View Cart</button>
+    </div>
+    <div class="items">
+        <div class="item">
+            <div class="item-name">
+                <h2>Fried Rice</h2>
+            </div>
+            <div class="item-price">
+                <p>$10</p>
+            </div>
+            <button class="addBtn">Add to Cart</button>
+        </div>
+        <div class="item">
+            <div class="item-name">
+                <h2>Briyani</h2>
+            </div>
+            <div class="item-price">
+                <p>$15</p>
+            </div>
+            <button class="addBtn">Add to Cart</button>
+        </div>
+        <div class="item">
+            <div class="item-name">
+                <h2>Ice Cream</h2>
+            </div>
+            <div class="item-price">
+                <p>$5</p>
+            </div>
+            <button class="addBtn">Add to Cart</button>
+        </div>
+        <div class="item">
+            <div class="item-name">
+                <h2>Soup</h2>
+            </div>
+            <div class="item-price">
+                <p>$4</p>
+            </div>
+            <button class="addBtn">Add to Cart</button>
+        </div>
+        <div class="item">
+            <div class="item-name">
+                <h2>Parotta</h2>
+            </div>
+            <div class="item-price">
+                <p>$3</p>
+            </div>
+            <button class="addBtn">Add to Cart</button>
+        </div>
+        <div class="item">
+            <div class="item-name">
+                <h2>Idli</h2>
+            </div>
+            <div class="item-price">
+                <p>$2</p>
+            </div>
+            <button class="addBtn">Add to Cart</button>
+        </div>
+        <div class="item">
+            <div class="item-name">
+                <h2>Lasagne</h2>
+            </div>
+            <div class="item-price">
+                <p>$7</p>
+            </div>
+            <button class="addBtn">Add to Cart</button>
+        </div>
+        <div class="item">
+            <div class="item-name">
+                <h2>Burger</h2>
+            </div>
+            <div class="item-price">
+                <p>$6</p>
+            </div>
+            <button class="addBtn">Add to Cart</button>
+        </div>
+        <div class="item">
+            <div class="item-name">
+                <h2>Custard</h2>
+            </div>
+            <div class="item-price">
+                <p>$6</p>
+            </div>
+            <button class="addBtn">Add to Cart</button>
+        </div>
+    </div>
+
+
+    <script>
+        document.querySelectorAll('.addBtn').forEach((btn) => {
+            btn.addEventListener('click', function (e) {
+                //console.log(e.target.previousSibling);
+                var itemName = e.target.parentElement.children[0].children[0].innerText;
+                var itemPrice = e.target.parentElement.children[1].children[0].innerText;
+
+                var item = {};
+                item.itemName = itemName; 
+                item.itemPrice = parseInt(itemPrice.slice(1,3)); 
+
+                console.log(item);
+
+                addToCart(item); 
+                
+            })
+        })
+
+        var listOfItems = [];
+
+        function addToCart(item) {
+            //console.log(item); 
+             
+
+            listOfItems.push(item);
+            console.log(listOfItems)
+
+            var cartItemsContainer = document.createElement('div');
+            cartItemsContainer.classList.add('cartContainer');
+            //cartItemsContainer.classList.add('hide');
+
+            
+
+            
+
+            listOfItems.map((li) => {
+                cartItemsContainer.innerHTML += `
+                    <div class="x">
+                     <h3>${li.itemName}</h3>
+                     <p>${li.itemPrice}</p>
+                    </div>
+                `;
+            })
+
+            
+
+            
+
+            document.body.appendChild(cartItemsContainer);
+
+            
+            document.querySelector('.cart').addEventListener('click', function () {
+                //alert('hi')
+
+                /*
+                document.querySelectorAll('cartContainer').forEach((cc) => {
+                    cc.classList.remove('hide');
+                })
+
+                */
+                //console.log(listOfItems)
+
+                var listOfItemsCopy = listOfItems; 
+
+                console.log(listOfItemsCopy)
+
+                var total = listOfItemsCopy.reduce((tot, index) => {
+                    return tot = tot + index.itemPrice; 
+                },0)
+
+                console.log(total)
+
+                var priceInHtml = document.createElement('p');
+                priceInHtml.innerText = `Total: ${total}`;
+                document.querySelector('.cart').appendChild(priceInHtml)
+                
+
+                
+            })
+            
+
+            
+        }
+
+        
+
+
+    </script>
+</body>
+</html>
